@@ -1,5 +1,5 @@
 # Created by Hugo Cruz Jimenez, August 2011, KAUST
-# Created by Tariq Anwar Aquib, 2024, KAUST
+# Modified by Tariq Anwar Aquib, 2024, KAUST
 # tariqanwar.aquib@kaust.edu.sa
 import sys
 from pprint import pprint
@@ -22,8 +22,6 @@ from TaperSlip import *
 from WaterLevel import *
 from fmomentN import *
 from WriteArray import *
-#mfrom Stat_Hypo import *
-from PlotFigure import *
 
 # [S,par] = SlipReal(srcpar,mech,acf,corr,seed,samp,grd,nexp,wlevel,taper,depth,dip,fig,outfile)
  

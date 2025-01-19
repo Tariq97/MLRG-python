@@ -24,7 +24,12 @@ def Compute_Yoffe_and_ML_STF(slip,vr,X2,Y2,crack_length,t_onset,Tr_eff,Tacc_rati
     for i in range(0,slip.shape[0]):
         for j in range(0,slip.shape[1]):
             slip_rate[i,j,:] = stf_Yoffe(slip_time,t_onset[i,j],Tr_eff[i,j],slip[i,j],Tacc[i,j])
-            slip_rate_norm[i,j,:] = slip_rate[i,j,:]/np.max(np.abs((slip_rate[i,j,:]))) # Can divide by NaN when Yoffe not possible (for very small slip values; neglect them)
+            if slip_rate[i,j,-1] == 0:   # This is done; because Yoffe is not possible if Tr is very large (more than 20); This is mostly at tapered edges where it very small slip
+                slip_rate_norm[i,j,:] = slip_rate[i,j,:]/np.max(np.abs((slip_rate[i,j,:]))) # Can divide by NaN when Yoffe not possible (for very small slip values; neglect them)
+            else:
+                slip_rate_norm[i,j,:] = np.zeros_like(slip_rate[i,j,:])
+                Tr_eff[i,j] = 0 # Make it zero here..
+                Tacc[i,j] = 0 
 
     slip_rate_yoffe = slip_rate
     
@@ -57,7 +62,7 @@ def Compute_Yoffe_and_ML_STF(slip,vr,X2,Y2,crack_length,t_onset,Tr_eff,Tacc_rati
 
     pred_extended = np.zeros_like(pred)
             
-    increments = [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8]
+    increments = [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5]
 
     pred_new = np.copy(pred)
     tr_new = np.copy(test_meta_all[:,6])
@@ -89,16 +94,23 @@ def Compute_Yoffe_and_ML_STF(slip,vr,X2,Y2,crack_length,t_onset,Tr_eff,Tacc_rati
             k1 = k1 + 1
 
 
-    input = np.nan_to_num(input,nan=0)
     pred = np.nan_to_num(pred,nan=0)
     pred_new = np.nan_to_num(pred_new,nan=0)
 
-    slip_rate_ml = np.reshape(pred_new,newshape=[slip.shape[0],slip.shape[1],slip_rate_norm.shape[-1]],order='F')
+    slip_rate_ml0 = np.reshape(pred,newshape=[slip.shape[0],slip.shape[1],slip_rate_norm.shape[-1]],order='F')
+    slip_rate_ml1 = np.reshape(pred_new,newshape=[slip.shape[0],slip.shape[1],slip_rate_norm.shape[-1]],order='F')
     # compute Vmax for pred_new
-    Vmax_new = np.max(pred_new,axis=1)
+    Vmax_new1 = np.max(pred_new,axis=1)
 
-    Vmax_new = np.transpose(np.reshape(Vmax_new,newshape=(slip.shape[1],slip.shape[0])))
-    Tr_new = np.transpose(np.reshape(tr_new,newshape=(slip.shape[1],slip.shape[0])))
+    Vmax_new1 = np.transpose(np.reshape(Vmax_new1,newshape=(slip.shape[1],slip.shape[0])))
+    Tr_new1 = np.transpose(np.reshape(tr_new,newshape=(slip.shape[1],slip.shape[0])))
+
+    # compute Vmax for pred
+    Vmax_new0 = np.max(pred,axis=1)
+
+    Vmax_new0 = np.transpose(np.reshape(Vmax_new0,newshape=(slip.shape[1],slip.shape[0])))
+    Tr_new0 = np.transpose(np.reshape(test_meta_all[:, 6],newshape=(slip.shape[1],slip.shape[0])))
 
 
-    return slip_time, slip_rate_yoffe, slip_rate_ml, Tr_new, Vmax_new
+    #return slip_time, slip_rate_yoffe, slip_rate_ml, Tr_new, Vmax_new, k_indices, pred,  pred_new
+    return slip_time, slip_rate_yoffe, slip_rate_ml0, slip_rate_ml1, Tr_new0, Vmax_new0, Tr_new1, Vmax_new1
