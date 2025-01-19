@@ -11,5 +11,5 @@ This repository contains code for Machine learning based rupture generator (MLRG
 ## Usage
 - Clone the repository using git clone
 - Install all python libraries given in environment.yml
-
+- Use script gen_PD_source.ipynb to list all input parameters
 
