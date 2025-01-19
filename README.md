@@ -13,3 +13,12 @@ This repository contains code for Machine learning based rupture generator (MLRG
 - Install all python libraries given in environment.yml
 - Use script gen_PD_source.ipynb to list all input parameters
 
+## Acknowledgements
+
+- Some Python codes have been adopted from the following sources ::::
+- The raytracing code is written by Walter Imperatori ::::
+
+## References
+
+[1] Aquib, T.A.; Vyas, J.C.; Mai, P.M.; 'Psuedo-dynamic source characterization for geometrically rough faults using machine learning', 2025, Bulletin of the Seismological Society of America (in review) 
+
