@@ -1,0 +1,9 @@
+Vs_sample.bin  # input file with velocity values
+100.           # grid-step of input grid
+50             # points along X
+40             # points along Y
+60             # points along Z
+1              # number of sources
+10             # source position along X in grid points
+30             # ... ... along Y ... ...
+40             # ... ... along Z ... ... 

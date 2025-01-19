@@ -1,0 +1,8 @@
+
+BLOCKED FILE ALERT
+
+A file has been blocked due to the 'Filter Binaries and Executables' rule.
+Context: 'raytracer.exe'
+Disallowed due to filename
+Ticket Number: '5c88-5706-5a75-0003'
+For further information, contact IT Helpdesk at ithelpdesk@kaust.edu.sa or by calling 012-808 0900 and selecting option 1.
