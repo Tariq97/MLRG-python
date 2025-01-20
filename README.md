@@ -12,10 +12,10 @@ This repository contains code for Machine learning based rupture generator (MLRG
 - Clone the repository using git clone
 - Install pytorch from https://pytorch.org/get-started/locally/
 - Install few more dependencies
-> pip install monai
-> pip install scipy
-> pip install scikit-fmm
-> pip install matplotlib
+	- pip install monai
+	- pip install scipy
+	- pip install scikit-fmm
+	- pip install matplotlib
 - Use script gen_PD_source.ipynb to list all input parameters and generate source models
 
 ## Acknowledgements
