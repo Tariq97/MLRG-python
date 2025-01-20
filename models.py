@@ -1,5 +1,9 @@
 # Created by Tariq Anwar Aquib, 2024, KAUST
 # tariqanwar.aquib@kaust.edu.sa
+
+
+# This script has models for Vr and Vmax
+
 import torch
 import numpy as np
 import torch.nn as nn
@@ -124,9 +128,19 @@ class FNO_Vr2d(nn.Module):
 
 def get_vr_estimations(path_model,test_inputs,modes,width):
 
-    model = FNO_Vr2d(modes, modes, width).cuda()
-    model.load_state_dict(torch.load(path_model))
-    model = model.float()
+    # model = FNO_Vr2d(modes, modes, width).cuda()
+    # model.load_state_dict(torch.load(path_model))
+    # model = model.float()
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(device)
+    if device.type == 'cpu':
+        model = FNO_Vr2d(modes, modes, width).cpu()
+        model.load_state_dict(torch.load(path_model,map_location=torch.device('cpu')))
+        model = model.float()
+    elif device.type == 'cuda':
+        model = FNO_Vr2d(modes, modes, width).cuda()
+        model.load_state_dict(torch.load(path_model))
+        model = model.float()
 
 
     from monai.inferers import SlidingWindowInferer
@@ -139,11 +153,13 @@ def get_vr_estimations(path_model,test_inputs,modes,width):
     input_tensor[3,:,:] = test_inputs[:,:,3]
     input_tensor[4,:,:] = test_inputs[:,:,4]
 
-    input_tensor = input_tensor.unsqueeze(0).cuda()
-    
+    #input_tensor = input_tensor.unsqueeze(0).cuda()
+    if device.type == 'cpu':
+        input_tensor = input_tensor.unsqueeze(0).cpu()
+    elif device.type == 'cuda':
+        input_tensor = input_tensor.unsqueeze(0).cuda()
 
     inferer = SlidingWindowInferer(roi_size=(32,32),sw_batch_size=1,overlap=0.75,mode='gaussian',sigma_scale=0.2)
-    
     with torch.no_grad():
         pred_gau = inferer(inputs=input_tensor, network=model)
 
@@ -224,9 +240,18 @@ class FNO2d_PSV(nn.Module):
 
 def get_psv_estimations(path_model,test_inputs,modes,width):
 
-    model = FNO2d_PSV(modes, modes, width).cuda()
-    model.load_state_dict(torch.load(path_model))
-    model = model.float()
+    # model = FNO2d_PSV(modes, modes, width).cuda()
+    # model.load_state_dict(torch.load(path_model))
+    # model = model.float()
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    if device.type == 'cpu':
+        model = FNO2d_PSV(modes, modes, width).cpu()
+        model.load_state_dict(torch.load(path_model,map_location=torch.device('cpu')))
+        model = model.float()
+    elif device.type == 'cuda':
+        model = FNO2d_PSV(modes, modes, width).cuda()
+        model.load_state_dict(torch.load(path_model))
+        model = model.float()
 
 
     from monai.inferers import SlidingWindowInferer
@@ -238,7 +263,11 @@ def get_psv_estimations(path_model,test_inputs,modes,width):
     input_tensor[2,:,:] = test_inputs[:,:,2]
     input_tensor[3,:,:] = test_inputs[:,:,3]
 
-    input_tensor = input_tensor.unsqueeze(0).cuda()
+    #input_tensor = input_tensor.unsqueeze(0).cuda()
+    if device.type == 'cpu':
+        input_tensor = input_tensor.unsqueeze(0).cpu()
+    elif device.type == 'cuda':
+        input_tensor = input_tensor.unsqueeze(0).cuda()
 
     inferer = SlidingWindowInferer(roi_size=(32,32),sw_batch_size=1,overlap=0.75,mode='gaussian',sigma_scale=0.1)
     with torch.no_grad():

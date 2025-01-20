@@ -148,15 +148,19 @@ class FNO2d(nn.Module):
         return x
 
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 
 def get_predictions_STF(path_model, batch_size, test_a_norm, test_meta_all, rise_time_factor):
-                  
-    path_model = '/home/aquibt/Pseudodynamic/STF/ML_models/trained_models/FNO_stf_norm_all_goodfit'
+    
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+              
+    path_model = './Trained_models/FNO_stf_norm_all_goodfit'
+    if device.type == 'cpu':
+        model = torch.load(path_model,map_location=torch.device('cpu'))
+        model.eval()
+    elif device.type == 'cuda':
+        model = torch.load(path_model).cuda()
+        model.eval()
 
-    model = torch.load(path_model)
-    model.eval()
     test_a1 = test_a_norm[:, :]
     test_meta1 = test_meta_all[:, :5]
 

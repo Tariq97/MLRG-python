@@ -4,17 +4,19 @@
 
 # Get first iteration of Vr and Vmax.
 import numpy as np
+from importlib import reload
+
 import models
+reload(models)
 from models import *
 import Slip2Stress
 from Slip2Stress import *
 import compute_CL
-from importlib import reload
 reload(compute_CL)
 from compute_CL import *
 
 
-def get_Vr_PSV(slip,hypo_x,hypo_z,lx,lz,samp):
+def get_Vr_PSV(slip,hypo_x,hypo_z,lx,lz,samp,rake):
 
     nz,nx = slip.shape
 
@@ -22,7 +24,6 @@ def get_Vr_PSV(slip,hypo_x,hypo_z,lx,lz,samp):
     hyp_ind_z = np.argmin(np.abs(lz-hypo_z))
 
     # compute stress drop
-    rake = 0
     sigmaS0, sigmaD0 = Slip2Stress(slip,rake,samp)
 
     sigmaS0 = sigmaS0/np.max(np.abs(sigmaS0))
