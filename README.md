@@ -11,12 +11,12 @@ This repository contains code for Machine learning based rupture generator (MLRG
 ## Usage
 - Clone the repository using git clone
 - Install all python libraries given in environment.yml
-- Use script gen_PD_source.ipynb to list all input parameters
+- Use script gen_PD_source.ipynb to list all input parameters and generate source models
 
 ## Acknowledgements
 
-- Some Python codes have been adopted from the following sources ::::
-- The raytracing code is written by Walter Imperatori ::::
+- Some Python codes have been adopted from the following sources http://equake-rc.info/cers-software/
+- The raytracing code is written by Walter Imperatori.
 
 ## References
 

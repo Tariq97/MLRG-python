@@ -8,7 +8,6 @@ import math
 import numpy as np
 from numpy.fft import fft2, ifft2
 from numpy.linalg import lstsq
-from val import *
 
 def SpecSyn2(N,samp,corr,acf='ak',Rseed=[]):
     #function [Y,spar,spec,ierr] = SpecSyn2(N,samp,corr,acf,Rseed)

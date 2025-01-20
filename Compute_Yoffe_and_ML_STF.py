@@ -92,8 +92,9 @@ def Compute_Yoffe_and_ML_STF(slip,vr,X2,Y2,crack_length,t_onset,Tr_eff,Tacc_rati
             lim = lim + 0.1
             #print(lim)
             k1 = k1 + 1
-
-
+    
+    str_mod  = 'Modifying ' +  str(len(k_indices)) + ' STFs out of ' +  str(len(pred)) 
+    print(str_mod)
     pred = np.nan_to_num(pred,nan=0)
     pred_new = np.nan_to_num(pred_new,nan=0)
 
