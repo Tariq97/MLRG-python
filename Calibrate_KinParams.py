@@ -9,6 +9,9 @@ from scipy.stats import rv_continuous
 import subprocess
 import os
 
+import skfmm
+
+
 def rupvel2onsettime(rupvel, h, s):
     # rupvel is rupture velocity; it is a 2D array.
     # n is the size of rup_vel
@@ -330,7 +333,19 @@ def Calibrate_Vmax(psv1,a_psv,b_psv):
 def compute_onset_times(vr,hyp_ind,dx):
     T = rupvel2onsettime(vr, dx, hyp_ind)
     T = np.transpose(T)
+
+    # No longer using raytracing by Walter but rather python code online: https://github.com/scikit-fmm/scikit-fmm/tree/master
+
     return T
+
+def compute_onset_times_scikit(vr,hyp_ind,dx):
+    X, Y = np.meshgrid(np.linspace(-1,1,vr.shape[1]), np.linspace(-1,1,vr.shape[0]))
+    phi = -1*np.ones_like(vr)
+    phi[hyp_ind[0],hyp_ind[1]] = 1
+    #d = skfmm.distance(phi, dx=float(dx))
+    t = skfmm.travel_time(phi, vr, dx=float(dx))
+
+    return t
 
 def Compute_Tr(psv,slip,Tacc_ratio=0.1):
     Tr = ( (1.04*slip)/((Tacc_ratio)**(0.54)*psv) )**(1/1.01)

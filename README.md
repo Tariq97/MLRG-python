@@ -16,7 +16,7 @@ This repository contains code for Machine learning based rupture generator (MLRG
 ## Acknowledgements
 
 - Some Python codes have been adopted from the following sources http://equake-rc.info/cers-software/
-- The raytracing code is written by Walter Imperatori.
+- The fast marching code is adopted from https://github.com/scikit-fmm/scikit-fmm/tree/master
 
 ## References
 
