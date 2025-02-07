@@ -6,26 +6,47 @@ import scipy.io
 
 # hypocentre is index with z direction as first value and x direction as second value.
 
-def compute_CL(slip,hyp,samp):
+def compute_CL(slip,hyp,dim,samp):
 
 
     # computing X and Y and crack length parameters:
-    org_dist_x = (hyp[1] - 1)*samp[1]
-    org_dist_y = (hyp[0] - 1)*samp[0]
+    #org_dist_x = (hyp[1] - 1)*samp[1]
+    #org_dist_y = (hyp[0] - 1)*samp[0]
 
     nz,nx = slip.shape
 
-    lx = np.arange(0,samp[1]*nx,samp[1])
-    lz = np.arange(0,samp[0]*nz,samp[0])
+    #lx = np.arange(0,samp[1]*nx,samp[1])
+    #lz = np.arange(0,samp[0]*nz,samp[0])
 
-    lx = lx[:nx]
-    lz = lz[:nz]
+    #lx = lx[:nx]
+    #lz = lz[:nz]
 
-    L = lx[-1]
-    W = lz[-1]
+    L = dim[1]
+    W = dim[0]
 
-    x = np.linspace(-org_dist_x,L-org_dist_x,num=nx)
-    y = np.linspace(org_dist_y,org_dist_y-W,num=nz)
+   
+
+    #x = np.linspace(-org_dist_x,L-org_dist_x,num=nx)
+    #y = np.linspace(org_dist_y,org_dist_y-W,num=nz)
+    
+    x = np.zeros(slip.shape[1])
+
+    for i in range(hyp[1]+1,len(x)):
+        x[i] = (i-hyp[1])*samp[1]
+
+    for i in range(hyp[1]):
+        x[i] = (i-hyp[1])*samp[1]
+
+
+    y = np.zeros(slip.shape[0])
+
+    for i in range(hyp[0]+1,len(y)):
+        y[i] = -((i-hyp[0])*samp[0])
+
+    for i in range(hyp[0]):
+        y[i] = (hyp[0]-i)*samp[0]
+
+
 
     X,Y = np.meshgrid(x,y)
 

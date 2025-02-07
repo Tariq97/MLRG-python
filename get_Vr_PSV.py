@@ -33,7 +33,7 @@ def get_Vr_PSV(slip,hypo_x,hypo_z,lx,lz,samp,rake):
 
     hyp_ind = np.array([hyp_ind_z, hyp_ind_x])  
 
-    X20, Y20, crack_length0 = compute_CL(slip,hyp_ind,samp)
+    X20, Y20, crack_length0 = compute_CL(slip,hyp_ind,[lz[-1],lx[-1]],samp)
     
     L = lx[-1]
     crack_length0 = crack_length0/L

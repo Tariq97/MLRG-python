@@ -17,8 +17,6 @@ from timeit import default_timer
 from Slip2Stress import *
 from compute_CL import *
 
-torch.manual_seed(0)
-np.random.seed(0)
 
 import stf_Yoffe
 from stf_Yoffe import *
