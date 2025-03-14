@@ -2,6 +2,8 @@
 
 This repository contains code for Machine learning based rupture generator (MLRG)
 
+![Alt text](methodology.jpg)
+
 ## Features
 - Generate a slip realization for given dimensions of fault following Mai and Beroza (2002)
 - Hypocenter location can be specified manually or using Mai et al., (2005)
