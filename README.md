@@ -27,7 +27,7 @@ This repository contains code for Machine learning based rupture generator (MLRG
 
 ## References
 
-[1] Aquib, T.A.; Vyas, J.C.; Mai, P.M.; 'Pseudo-dynamic source characterization for geometrically rough faults using machine learning', 2025, Bulletin of the Seismological Society of America (in review) 
+[1] Aquib, T. A., J. C. Vyas, and P. M. Mai (2025). Pseudo-Dynamic Source Characterization for Geometrically Rough Faults Using Machine Learning, Bull. Seismol. Soc. Am. 115, 1570–1590, doi: 10.1785/0120240237
 
 ## Cite the code
 [![DOI](https://zenodo.org/badge/919073782.svg)](https://doi.org/10.5281/zenodo.14697943)
